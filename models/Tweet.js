@@ -7,7 +7,7 @@ const TweetSchema = new Schema({
     ref: 'users'
   },
 
-  text: {
+  tweet: {
     type: String,
     required: true
   },

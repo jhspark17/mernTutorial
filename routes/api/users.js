@@ -17,7 +17,11 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ msg: "success" });
+    res.json({ 
+      id: req.user.id,
+      handle: req.user.handle,
+      email: req.user.email
+    });
   }
 );
 
@@ -52,7 +56,6 @@ router.post("/register", (req, res) => {
   });
 });
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOTdhYzdiODM4ZmQ4OWVhNzRkYzNhMSIsImlhdCI6MTU3MDIyNzE0MiwiZXhwIjoxNTcwMjMwNzQyfQ.aMzG9c6dkLVQ0w-8SnOSm3l7KHFJZ_rlpQPlBlXqY08
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) return res.status(400).json(errors);
@@ -78,7 +81,7 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: `Bearer ${token}`
+              token: "Bearer " + token 
             });
           }
         );
@@ -89,32 +92,6 @@ router.post("/login", (req, res) => {
 
 module.exports = router;
 
-//register
-// {
-//   const payload = {id: user.id, name: user.handle}
-//   jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600},
-//     (err, token) => {
-//       res.json({
-//         success: true,
-//         token: "Bearer " + token
-//       })
-//     })
-// }
 
-//login
-// const payload = {
-//   id: user.id,
-//   name: user.name
-// };
 
-// jwt.sign(
-//   payload,
-//   keys.secretOrKey,
-//   { expiresIn: 3600 },
-//   (err, token) => {
-//     res.json({
-//       success: true,
-//       token: `Bearer ${token}`
-//     });
-//   }
-// );
+
